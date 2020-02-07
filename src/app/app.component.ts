@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: `
+    <app-layout>
+      <app-characters-page></app-characters-page>
+    </app-layout>
+  `
 })
 export class AppComponent {
-  title = 'rickAndMorty';
 }

@@ -1,0 +1,44 @@
+table {
+  height: 15.4rem;
+  width: 100%;
+
+  td, th {
+    width: 100%;
+  }
+}
+
+nz-card {
+  margin-bottom: 0.625rem;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.card-cover-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  opacity: 0.6;
+  background: rgb(32, 35, 41);
+  padding: 0.625rem;
+
+  h2 {
+    color: rgb(245, 245, 245);
+    font-size: 1.625rem;
+    font-weight: 400;
+    font-stretch: expanded;
+    margin: 0px;
+  }
+
+  p {
+    color: rgb(187, 187, 187);
+    font-size: 0.875rem;
+    margin: 0px;
+  }
+}

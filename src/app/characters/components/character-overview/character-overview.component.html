@@ -1,0 +1,36 @@
+<nz-card [nzCover]="coverTemplate">
+  <table>
+    <tbody>
+    <tr>
+      <td>STATUS</td>
+      <td>{{character.status | titlecase}}</td>
+    </tr>
+    <tr>
+      <td>SPECIES</td>
+      <td>{{character.species | titlecase}}</td>
+    </tr>
+    <tr>
+      <td>GENDER</td>
+      <td>{{character.gender | titlecase}}</td>
+    </tr>
+    <tr>
+      <td>ORIGIN</td>
+      <td>{{character.origin?.name | titlecase}}</td>
+    </tr>
+    <tr>
+      <td>LAST LOCATION</td>
+      <td>{{character.location?.name | titlecase}}</td>
+    </tr>
+    </tbody>
+  </table>
+</nz-card>
+<ng-template #coverTemplate>
+  <div class="container">
+    <img [alt]="character.name" [src]="character.image" style="width:100%;"/>
+    <div class="card-cover-text">
+      <h2>{{character.name | slice:0:18}}</h2>
+      <p>Id: {{character.id}} - created {{character.created | dateAgo}}</p>
+    </div>
+  </div>
+</ng-template>
+

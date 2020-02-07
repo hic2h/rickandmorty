@@ -1,0 +1,24 @@
+<app-search (search)="onSeach($event)" [searchQuery]="searchQuery"></app-search>
+<div  *ngIf="characters$ | async as characters; else loading">
+  <ng-container *ngIf="characters.results.length else emptyState">
+    <div nz-row [nzGutter]="10" class="search-result-list">
+      <h3>{{characters.info.count}} {{characters.info.count > 1 ? 'characters found' : 'character found'}} </h3>
+      <app-character-overview nz-col [nzXl]="6" [nzLg]="8" [nzSm]="12" [nzXs]="24" *ngFor="let character of characters.results" [character]="character"></app-character-overview>
+    </div>
+    <div class="pagination">
+      <nz-pagination [nzPageIndex]="searchQuery?.page || 1" [nzPageSize]="20" [nzTotal]="characters.info.count" (nzPageIndexChange)="setCurrentPage($event)" nzSimple></nz-pagination>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #loading>
+  <div class="search-result-list">
+    <nz-spin nzSimple [nzSize]="'large'" class="center"></nz-spin>
+  </div>
+</ng-template>
+<ng-template #emptyState>
+  <div class="search-result-list center">
+    <img src="https://s27477.pcdn.co/wp-content/themes/hewlett/assets/images/no-search-icon@2x.png" width="100px">
+    <h1>No results found</h1>
+  </div>
+</ng-template>

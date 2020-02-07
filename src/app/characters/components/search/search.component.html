@@ -1,0 +1,74 @@
+<form nz-form [formGroup]="searchForm" novalidate (ngSubmit)="submitForm()" class="ant-advanced-search-form">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzLg]="14" [nzSm]="24">
+      <nz-form-item nzFlex>
+        <nz-form-control>
+          <input
+            nz-input
+            placeholder="Filter by character name"
+            formControlName="name"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzLg]="10" [nzSm]="24">
+      <nz-form-item nzFlex>
+        <nz-form-control>
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Filter By Status" formControlName="status">
+            <nz-option nzLabel="Alive" nzValue="alive"></nz-option>
+            <nz-option nzLabel="Dead" nzValue="dead"></nz-option>
+            <nz-option nzLabel="Unknown" nzValue="unknown"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24" [hidden]="hideMoreFilters">
+      <div nz-col [nzLg]="12" [nzSm]="24">
+        <nz-form-item nzFlex>
+          <nz-form-control>
+            <input
+              nz-input
+              placeholder="Filter by species"
+              formControlName="species"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzLg]="12" [nzSm]="24">
+        <nz-form-item nzFlex>
+          <nz-form-control>
+            <input
+              nz-input
+              placeholder="Filter by type"
+              formControlName="type"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzLg]="12" [nzSm]="24">
+        <nz-form-item nzFlex>
+          <nz-form-control>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Filter By Gender" formControlName="gender">
+              <nz-option nzLabel="Female" nzValue="female"></nz-option>
+              <nz-option nzLabel="Male" nzValue="male"></nz-option>
+              <nz-option nzLabel="Genderless" nzValue="genderless"></nz-option>
+              <nz-option nzLabel="Unknown" nzValue="unknown"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="24" class="search-area">
+      <button nz-button type="submit" [nzType]="'primary'">Search</button>
+      <button nz-button (click)="resetForm()">Clear</button>
+      <a class="collapse" (click)="toggleMoreFilters()">
+        More Filters
+        <i nz-icon [nzType]="hideMoreFilters ? 'down' : 'up'"></i>
+      </a>
+    </div>
+  </div>
+</form>
