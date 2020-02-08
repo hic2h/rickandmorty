@@ -1,27 +1,64 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
 import {SearchQuery} from '../entities/seach-query';
-import {Observable, of, pipe} from 'rxjs';
-import {environment} from '../../../environments/environment';
+import {Observable} from 'rxjs';
 import {Characters} from '../entities/character';
-import {catchError} from 'rxjs/operators';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CharactersApiService {
-  charactersUrl = `${environment.baseUrl}/character`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private apollo: Apollo) { }
 
-  search(searchQuery: SearchQuery = null): Observable<Characters> {
-    let params = new HttpParams();
+  search(searchQuery: SearchQuery = {}): Observable<Characters> {
+    const CurrentUserForProfile = gql`
+      query searchCharacters($page: Int!, $filter: FilterCharacter!) {
+        characters(page: $page, filter: $filter) {
+          info {
+            count,
+            pages
+          }
+          results {
+            name,
+            id,
+            status,
+            image,
+            created,
+            species,
+            gender,
+            type,
+            origin {
+              name
+            },
+            location {
+              name
+            }
+          }
+        }
+      }
+    `;
+    const page = searchQuery.page;
+    const filter = {};
     Object.keys(searchQuery).forEach(key => {
-      if (searchQuery[key]) {
-        params = params.append(key, searchQuery[key]);
+      if (key !== 'page' && searchQuery[key]) {
+        filter[key] = searchQuery[key];
       }
     });
-    return this.http.get<Characters>(this.charactersUrl, { params })
-      .pipe(catchError(() => of({results: []} as Characters))); // To simplify Error handling in this example, just return empty results
+    return this.apollo
+      .watchQuery<{characters: Characters}>({
+        query: CurrentUserForProfile,
+        variables: { page, filter }
+      })
+      .valueChanges.pipe(
+        map((queryResults) => {
+          if (!queryResults.data || !queryResults.data.characters.results) {
+            return {results: []} as Characters;
+          }
+          return queryResults.data.characters;
+        })
+      );
   }
 }

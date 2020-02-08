@@ -11,6 +11,7 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { LayoutComponent } from './layout/layout.component';
 import {RouterModule} from '@angular/router';
+import { GraphQLModule } from './graphql.module';
 
 registerLocaleData(en);
 
@@ -26,7 +27,8 @@ registerLocaleData(en);
     NgZorroAntdModule,
     RouterModule.forRoot([]),
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    GraphQLModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

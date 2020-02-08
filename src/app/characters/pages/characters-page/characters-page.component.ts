@@ -21,7 +21,11 @@ export class CharactersPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.characters$ = this.route.queryParams.pipe(
-      map(params => this.searchQuery = params),
+      map(params => {
+        /** If the route has a page query parameter, then convert its value nto a number*/
+        this.searchQuery = {...params, page: params.page ? parseInt(params.page, 0) : 1};
+        return this.searchQuery;
+      }),
       switchMap(params => this.charactersApi.search(params))
     );
   }
